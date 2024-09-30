@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>User Profiles</title>
+</head>
+<body>
+<table id="userProfiles">
+  <thead>
+    <tr>
+      <th>First Name</th>
+      <th>Last Name</th>
+      <th>Email</th>
+      <th>Date Of Birth</th>
+      <th>Address</th>
+      <th>Preferences</th>
+    </tr>
+  </thead>
+  <tbody>
+  </tbody>
+</table>
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+  fetch('userProfiles.json')
+    .then(response => response.json())
+    .then(data => {
+      let tbody = document.querySelector("#userProfiles tbody");
+
+      data.forEach(user => {
+        let tr = document.createElement("tr");
+        let firstNameTd = document.createElement("td");
+        let lastNameTd = document.createElement("td");
+        let emailTd = document.createElement("td");
+        let dobTd = document.createElement("td");
+        let addressTd = document.createElement("td");
+        let prefsTd = document.createElement("td");
+
+        firstNameTd.textContent = user.firstName;
+        lastNameTd.textContent = user.lastName;
+        emailTd.textContent = user.email;
+        dobTd.textContent = user.dateOfBirth;
+        addressTd.textContent = `${user.address.street}, ${user.address.city}, ${user.address.state} ${user.address.zipCode}`;
+        prefsTd.textContent = `Theme: ${user.preferences.theme}, Language: ${user.preferences.language}, Notifications: ${user.preferences.notifications ? 'On' : 'Off'}, Subscription: ${user.preferences.subscription ? 'Yes' : 'No'}`;
+
+        tr.appendChild(firstNameTd);
+        tr.appendChild(lastNameTd);
+        tr.appendChild(emailTd);
+        tr.appendChild(dobTd);
+        tr.appendChild(addressTd);
+        tr.appendChild(prefsTd);
+
+        tbody.appendChild(tr);
+      });
+    });
+});
+</script>
+</body>
+</html>
